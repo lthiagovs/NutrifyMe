@@ -3,8 +3,8 @@ import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
 @Controller('users')
 export class UsersController {
 
-    @Get(':id')
-    async getUserByID(@Param('id') id: string): Promise<any>{
+    @Get()
+    async getAllUsers(@Param('id') id: string): Promise<any>{
         return 1
     }
 
