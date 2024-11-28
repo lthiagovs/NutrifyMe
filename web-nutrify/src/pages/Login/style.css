@@ -1,111 +1,68 @@
-/* login.css */
+.login-container {
+  margin-top: 80px;
+}
 
-/* Navbar */
-.navbar {
-    background-color: #333;
-    padding: 15px 0;
-    width: 100%;
-    position: fixed; /* Fixa a navbar no topo */
-    top: 0;
-    left: 0;
-    z-index: 1000; /* Garante que a navbar fique acima de outros elementos */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Sombra sutil para dar destaque */
-  }
-  
-  .navbar ul {
-    list-style-type: none;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .navbar li {
-    margin: 0 20px;
-  }
-  
-  .nav-link {
-    color: #e0e0e0;
-    font-size: 18px;
-    text-transform: uppercase;
-    transition: color 0.3s ease;
-  }
-  
-  .nav-link:hover {
-    color: #6200ea;
-  }
-  
-  /* Ajuste para o conteúdo abaixo da navbar não ficar sobreposto */
-  .login-container {
-    margin-top: 80px; /* Adiciona espaço suficiente para a navbar */
-  }
-  
-  /* Header */
-  .header {
-    text-align: center;
-    padding: 20px;
-  }
-  
-  h1 {
-    color: #fff;
-    font-size: 36px;
-    font-weight: bold;
-    letter-spacing: 2px;
-    margin-top: 20px;
-  }
-  
-  /* Formulário de login */
-  .login-form {
-    background-color: #1e1e1e;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    width: 100%;
-    max-width: 400px;
-    margin: 20px auto;
-  }
-  
-  .login-form h2 {
-    color: #6200ea;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .input {
-    background-color: #333;
-    color: #e0e0e0;
-    border: 1px solid #444;
-    border-radius: 8px;
-    padding: 12px;
-    font-size: 16px;
-    width: 100%;
-    margin-bottom: 15px;
-    transition: border-color 0.3s ease;
-  }
-  
-  .input:focus {
-    border-color: #6200ea;
-    outline: none;
-    box-shadow: 0 0 5px rgba(98, 0, 234, 0.5);
-  }
-  
-  .btn {
-    background-color: #6200ea;
-    color: white;
-    border: 2px solid #6200ea;
-    padding: 12px 24px;
-    font-size: 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    width: 100%;
-    transition: all 0.3s ease;
-  }
-  
-  .btn:hover {
-    background-color: transparent;
-    color: #6200ea;
-    transform: translateY(-3px);
-  }
-  
-  .btn:active {
-    transform: translateY(1px);
-  }
+h1 {
+  color: #fff;
+  font-size: 36px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin-top: 20px;
+}
+
+.login-form {
+  background-color: #1e1e1e;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+.login-form h2 {
+  color: #6200ea;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.input {
+  background-color: #333;
+  color: #e0e0e0;
+  border: 1px solid #444;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 16px;
+  width: 100%;
+  margin-bottom: 15px;
+  transition: border-color 0.3s ease;
+}
+
+.input:focus {
+  border-color: #6200ea;
+  outline: none;
+  box-shadow: 0 0 5px rgba(98, 0, 234, 0.5);
+}
+
+.btn {
+  background-color: #6200ea;
+  color: white;
+  border: 2px solid #6200ea;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background-color: transparent;
+  color: #6200ea;
+  transform: translateY(-3px);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
   
