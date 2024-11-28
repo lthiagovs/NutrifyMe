@@ -2,17 +2,28 @@ import React from 'react';
 import "./style.css";
 
 const Layout = ({ children }) => {
-    return(
-    <header class="header">
-        <nav class="navbar">
-            <ul>
-                <li><a href="#" class="nav-link">Home</a></li>
-                <li><a href="#" class="nav-link">Sobre</a></li>
-                <li><a href="#" class="nav-link">Contato</a></li>
-            </ul>
-        </nav>
-    </header>
-    )
-}
+    return (
+        <div className="layout-container">
 
-export default Header;
+        <header className="header">
+          <div className="logo">MinhaApp</div>
+
+          <nav className="nav">
+            <button className="nav-btn">Início</button>
+            <button className="nav-btn">Perfil</button>
+            <button className="nav-btn">Sair</button>
+          </nav>
+          
+        </header>
+
+        <main className="main-content">{children}</main>
+
+        <footer className="footer">
+          <p>&copy; 2024 Minha Aplicação | Feito com Nest.JS</p>
+        </footer>
+
+      </div>
+    );
+  };
+
+export default Layout;
