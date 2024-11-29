@@ -1,12 +1,12 @@
-import "./style.css"
-import React, {useState} from "react";
+import React, { useState } from "react";
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import { Box, Button, Typography } from '@mui/material';
+import './style.css'
 
 const ConsultationPage = () => {
-
   const [events, setEvents] = useState([
     { title: 'Consulta 1', date: '2024-11-28' },
     { title: 'Consulta 2', date: '2024-11-29' },
@@ -38,8 +38,20 @@ const ConsultationPage = () => {
   };
 
   return (
-    <div className="appointment-scheduler">
-      <h1>Agendar Consultas</h1>
+    <Box 
+      sx={{
+        maxWidth: 900, 
+        margin: '50px auto', 
+        padding: 3, 
+        borderRadius: 2, 
+        backgroundColor: '#fff', 
+        boxShadow: 3
+      }}
+    >
+      <Typography variant="h4" align="center" color="primary" gutterBottom>
+        Agendar Consultas
+      </Typography>
+      
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="timeGridWeek"
@@ -55,7 +67,7 @@ const ConsultationPage = () => {
         }}
         locale="pt-br"
       />
-    </div>
+    </Box>
   );
 };
 

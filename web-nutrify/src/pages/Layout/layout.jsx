@@ -6,7 +6,7 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 const Layout = ({ children }) => {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+    <div style={{ display: 'flex', flexDirection: 'column'}}>
       {/* AppBar (Navbar) */}
       <AppBar position="sticky" sx={{ backgroundColor: '#388e3c' }}>
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -28,7 +28,7 @@ const Layout = ({ children }) => {
       </AppBar>
 
       {/* Conteúdo Principal */}
-      <main style={{ flex: 1, padding: '20px', marginTop: '80px' }}>
+      <main style={{ flex: 1}}>
         {children}
       </main>
 

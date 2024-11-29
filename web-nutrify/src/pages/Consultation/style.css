@@ -33,16 +33,17 @@
 }
 
 .fc-button {
-  background-color: #4caf50;
-  color: #ffffff;
-  border: none;
+  background-color: #4caf50 !important;
+  color: #ffffff !important;
+  border: none !important;
   padding: 5px 10px;
   border-radius: 5px;
   transition: background-color 0.3s ease;
+  font-size: 14px;
 }
 
 .fc-button:hover {
-  background-color: #388e3c;
+  background-color: #388e3c !important;
 }
 
 .fc-button:focus {
@@ -70,4 +71,13 @@
 
 .fc-highlight {
   background-color: rgba(76, 175, 80, 0.3);
+}
+
+.navbar .MuiButton-root {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+.navbar .MuiButton-root:hover {
+  background-color: #333333 !important;
 }
