@@ -1,29 +1,43 @@
 import React from 'react';
-import "./style.css";
+import { AppBar, Toolbar, Typography, Button } from '@mui/material';
+import HomeIcon from '@mui/icons-material/Home';
+import PersonIcon from '@mui/icons-material/Person';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 const Layout = ({ children }) => {
-    return (
-        <div className="layout-container">
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      {/* AppBar (Navbar) */}
+      <AppBar position="sticky" sx={{ backgroundColor: '#388e3c' }}>
+        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: 'bold' }}>
+            NutrifyMe
+          </Typography>
+          <div>
+            <Button sx={{ color: 'white' }} startIcon={<HomeIcon />}>
+              Início
+            </Button>
+            <Button sx={{ color: 'white' }} startIcon={<PersonIcon />}>
+              Perfil
+            </Button>
+            <Button sx={{ color: 'white' }} startIcon={<ExitToAppIcon />}>
+              Sair
+            </Button>
+          </div>
+        </Toolbar>
+      </AppBar>
 
-        <header className="header">
-          <div className="logo">MinhaApp</div>
+      {/* Conteúdo Principal */}
+      <main style={{ flex: 1, padding: '20px', marginTop: '80px' }}>
+        {children}
+      </main>
 
-          <nav className="nav">
-            <button className="nav-btn">Início</button>
-            <button className="nav-btn">Perfil</button>
-            <button className="nav-btn">Sair</button>
-          </nav>
-          
-        </header>
-
-        <main className="main-content">{children}</main>
-
-        <footer className="footer">
-          <p>&copy; 2024 Minha Aplicação | Feito com Nest.JS</p>
-        </footer>
-
-      </div>
-    );
-  };
+      {/* Rodapé */}
+      <footer style={{ backgroundColor: '#388e3c', color: 'white', textAlign: 'center', padding: '10px' }}>
+        <p>&copy; 2024 NutrifyMe | Feito com React</p>
+      </footer>
+    </div>
+  );
+};
 
 export default Layout;
