@@ -3,7 +3,7 @@
 }
 
 h1 {
-  color: #fff;
+  color: #333;
   font-size: 36px;
   font-weight: bold;
   letter-spacing: 2px;
@@ -11,25 +11,25 @@ h1 {
 }
 
 .login-form {
-  background-color: #1e1e1e;
+  background-color: #ffffff;
   padding: 30px;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 400px;
   margin: 20px auto;
 }
 
 .login-form h2 {
-  color: #6200ea;
+  color: #4caf50;
   text-align: center;
   margin-bottom: 20px;
 }
 
 .input {
-  background-color: #333;
-  color: #e0e0e0;
-  border: 1px solid #444;
+  background-color: #f1f1f1;
+  color: #333;
+  border: 1px solid #ccc;
   border-radius: 8px;
   padding: 12px;
   font-size: 16px;
@@ -39,15 +39,15 @@ h1 {
 }
 
 .input:focus {
-  border-color: #6200ea;
+  border-color: #4caf50;
   outline: none;
-  box-shadow: 0 0 5px rgba(98, 0, 234, 0.5);
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
 }
 
 .btn {
-  background-color: #6200ea;
+  background-color: #4caf50;
   color: white;
-  border: 2px solid #6200ea;
+  border: 2px solid #4caf50;
   padding: 12px 24px;
   font-size: 16px;
   border-radius: 8px;
@@ -58,11 +58,10 @@ h1 {
 
 .btn:hover {
   background-color: transparent;
-  color: #6200ea;
+  color: #4caf50;
   transform: translateY(-3px);
 }
 
 .btn:active {
   transform: translateY(1px);
 }
-  
