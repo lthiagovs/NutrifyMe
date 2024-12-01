@@ -1,24 +1,30 @@
-import { Prop, Schema } from "@nestjs/mongoose";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { ApiProperty } from "@nestjs/swagger";
+import { Document } from 'mongoose';
 
 @Schema()
 export class Consultation extends Document{
 
     @Prop()
-    name : string
-
-    @Prop()
-    email : string
-
-    @Prop()
+    @ApiProperty()
     number : string
 
     @Prop()
+    @ApiProperty()
+    name : string
+
+    @Prop()
+    @ApiProperty()
+    email : string
+
+    @Prop()
+    @ApiProperty()
     bodyType : string
 
     @Prop()
+    @ApiProperty()
     start : Date
 
-    @Prop()
-    end : Date
-
 }
+
+export const ConstultationSchema = SchemaFactory.createForClass(Consultation);

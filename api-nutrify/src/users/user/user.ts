@@ -4,6 +4,7 @@ import { Document } from 'mongoose';
 
 @Schema()
 export class User extends Document{
+    
     @Prop()
     @ApiProperty()
     name: string
