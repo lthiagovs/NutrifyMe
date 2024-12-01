@@ -23,7 +23,11 @@ export class Consultation extends Document{
 
     @Prop()
     @ApiProperty()
-    start : Date
+    start : string
+
+    @Prop()
+    @ApiProperty()
+    end : string
 
 }
 

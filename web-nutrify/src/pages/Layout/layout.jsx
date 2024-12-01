@@ -6,7 +6,7 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 const Layout = ({ children }) => {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column'}}>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       {/* AppBar (Navbar) */}
       <AppBar position="sticky" sx={{ backgroundColor: '#388e3c' }}>
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -28,12 +28,12 @@ const Layout = ({ children }) => {
       </AppBar>
 
       {/* Conteúdo Principal */}
-      <main style={{ flex: 1}}>
+      <main style={{ flex: 1, marginTop: '20px', marginBottom: '20px' }}>
         {children}
       </main>
 
       {/* Rodapé */}
-      <footer style={{ backgroundColor: '#388e3c', color: 'white', textAlign: 'center', padding: '10px' }}>
+      <footer style={{ backgroundColor: '#388e3c', color: 'white', textAlign: 'center', padding: '10px', marginTop: 'auto' }}>
         <p>&copy; 2024 NutrifyMe | Feito com React</p>
       </footer>
     </div>
