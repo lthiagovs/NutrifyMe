@@ -41,12 +41,14 @@ export class UsersController {
         return this.userService.createUser(user);
     }
 
+    @UseGuards(GuardService)
     @ApiCreatedResponse({type: User, description: "Update a user"})
     @Put(':id')
     async updateUser(@Param('id') id: string, @Body() user: User): Promise<User>{
         return this.userService.updateUser(id,user);
     }
 
+    @UseGuards(GuardService)
     @ApiCreatedResponse({type: User, description: "Delete a user"})
     @Delete(':id')
     async deleteUser(@Param('id') id: string): Promise<User>{
