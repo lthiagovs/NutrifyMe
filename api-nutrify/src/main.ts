@@ -18,6 +18,7 @@ async function bootstrap() {
     .setTitle('Nutrify API')
     .setDescription('Nutrify API Documentation by Swagger')
     .setVersion('1.0')
+    .addBearerAuth()
     .build()
 
   const document = SwaggerModule.createDocument(app, config);

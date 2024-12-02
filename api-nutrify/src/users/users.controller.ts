@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, UnauthorizedException, UseGuards, Headers } from '@nestjs/common';
 import { User } from './user/user';
 import { UsersService } from './users.service';
-import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from 'src/auth/auth.service';
 import { UserLogin } from './user/userLogin';
 import { GuardService } from 'src/guard/guard.service';
@@ -13,19 +13,16 @@ export class UsersController {
     constructor(private readonly userService: UsersService,
                 private readonly authService: AuthService
     ){}
-
-    @UseGuards(GuardService)
+    
     @ApiCreatedResponse({type: User, isArray: true, description: "Get All Users from DB"})
     @Get()
     async getAllUsers(): Promise<User[]>{
         return this.userService.listAllUsers();
     }
 
-    @ApiCreatedResponse()
-    @Post("check-token")
-    async checkToken(@Headers("Authorization") token: string) {
+    @Get('check-token/:token')  // Passa o token como parâmetro da URL
+    async checkToken(@Param('token') token: string) {
         const isValid = await this.authService.checkToken(token);
-
         return { valid: isValid };
     }
 

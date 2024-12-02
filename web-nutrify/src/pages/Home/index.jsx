@@ -1,5 +1,8 @@
 import React from "react";
-import { Button, Container, Typography, Box } from "@mui/material";
+import { Container, Typography, Box, Grid } from "@mui/material";
+import ReactIcon from "@mui/icons-material/Code";
+import NodeIcon from "@mui/icons-material/Terminal";
+import NestIcon from "@mui/icons-material/DeveloperBoard";
 
 const HomePage = () => {
   return (
@@ -27,7 +30,7 @@ const HomePage = () => {
         }}
       >
         <Typography variant="h3" sx={{ fontWeight: "bold", color: "#4caf50" }}>
-          NutrifyMe
+          Bem-vindo ao NutrifyMe!
         </Typography>
         <Typography
           variant="h5"
@@ -40,63 +43,27 @@ const HomePage = () => {
         >
           Um projeto para promover um estilo de vida saudável!
         </Typography>
-        
-        <Box sx={{ marginTop: "20px", marginBottom: "20px" }}>
-          <Typography
-            variant="body1"
-            sx={{
-              color: "#555",
-              marginBottom: "10px",
-              lineHeight: "1.6",
-            }}
-          >
-            O <strong>NutrifyMe</strong> é uma plataforma desenvolvida para ajudar
-            as pessoas a melhorar sua alimentação, oferecendo recomendações
-            personalizadas baseadas em seus objetivos e preferências alimentares.
-            Com uma interface fácil de usar e recursos inteligentes, ajudamos você
-            a alcançar uma vida mais saudável.
-          </Typography>
 
-          <Typography
-            variant="body2"
-            sx={{
-              color: "#777",
-              fontStyle: "italic",
-              marginBottom: "10px",
-            }}
-          >
-            Projeto criado utilizando as tecnologias:
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              fontWeight: "bold",
-              color: "#333",
-              lineHeight: "1.6",
-            }}
-          >
-            React, NestJS, Node.js
-          </Typography>
-        </Box>
-
-        <Button
-          variant="contained"
-          color="success"
-          size="large"
-          sx={{
-            padding: "12px 24px",
-            fontSize: "18px",
-            fontWeight: "bold",
-            borderRadius: "8px",
-            marginTop: "20px",
-            "&:hover": {
-              backgroundColor: "#388e3c",
-            },
-          }}
-          onClick={() => window.location.href = "/login"}
-        >
-          Começar
-        </Button>
+        <Grid container spacing={3} sx={{ marginTop: "40px" }} justifyContent="center">
+          <Grid item>
+            <ReactIcon sx={{ fontSize: 50, color: "#61dafb" }} />
+            <Typography variant="body1" sx={{ marginTop: "10px" }}>
+              React
+            </Typography>
+          </Grid>
+          <Grid item>
+            <NodeIcon sx={{ fontSize: 50, color: "#68a063" }} />
+            <Typography variant="body1" sx={{ marginTop: "10px" }}>
+              Node.js
+            </Typography>
+          </Grid>
+          <Grid item>
+            <NestIcon sx={{ fontSize: 50, color: "#e0234e" }} />
+            <Typography variant="body1" sx={{ marginTop: "10px" }}>
+              NestJS
+            </Typography>
+          </Grid>
+        </Grid>
       </Box>
     </Container>
   );

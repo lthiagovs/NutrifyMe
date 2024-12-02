@@ -6,7 +6,7 @@ const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useAuth(); // Usa o hook de contexto
 
   if (!isAuthenticated) {
-    return <Navigate to="/Login" />;
+    return <Navigate to="/Login" />; // Redireciona para a página de login se não estiver autenticado
   }
 
   return children;

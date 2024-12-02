@@ -17,7 +17,7 @@ import { ConfigModule } from '@nestjs/config';
     ConsultationsModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET || 'nutrifyme', // Certifique-se de definir essa chave
-      signOptions: { expiresIn: '1h' }, // Opcional: ajuste o tempo de expiração
+      signOptions: { expiresIn: '60s' }, // Opcional: ajuste o tempo de expiração
     }),
   ],
   controllers: [AppController],

@@ -1,111 +1,181 @@
-import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
-import { TextField, Button, Box, Typography, Container, Tabs, Tab } from '@mui/material';
-import api from "../../services/api"; // Importa a configuração do axios
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { TextField, Button, Box, Typography, Container, Tabs, Tab, Alert, InputAdornment, CircularProgress } from "@mui/material";
+import { Email, Lock, Person, HowToReg, ExitToApp } from "@mui/icons-material";
+import api from "../../services/api";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  
-  // Estados para login
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  
-  // Estados para cadastro
-  const [name, setName] = useState('');
-  const [newEmail, setNewEmail] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [age, setAge] = useState('');
-  
-  // Controla a aba (login ou cadastro)
-  const [value, setValue] = useState(0); // 0 vai inicializar na aba de cadastro
 
-  const handleLogin = (event) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [newEmail, setNewEmail] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [age, setAge] = useState("");
+  const [value, setValue] = useState(1);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  // Verificação do JWT no localStorage ao carregar a página
+  useEffect(() => {
+    const token = localStorage.getItem("jwt");
+    if (token) {
+      // Se houver token, redireciona para o perfil
+      navigate("/Profile");
+    }
+  }, [navigate]);
+
+  const handleLogin = async (event) => {
     event.preventDefault();
-    console.log("Login com:", email, password);
-    navigate('/Profile'); // Navegar após login
+    setErrorMessage("");
+    setLoading(true);
+
+    if (!email || !password) {
+      setLoading(false);
+      setErrorMessage("Por favor, preencha todos os campos.");
+      return;
+    }
+
+    try {
+      const response = await api.post("/users/login", { email, password });
+      const { token } = response.data;
+
+      if (token) {
+        localStorage.setItem("jwt", token);
+
+        // Simular carregamento e recarregar antes de redirecionar
+        setTimeout(() => {
+          window.location.reload();
+          setTimeout(() => {
+            navigate("/Profile");
+          }, 1000); // Aguardar 1 segundo antes de redirecionar para Profile
+        }, 1000); // Tempo da animação de carregamento
+      } else {
+        setLoading(false);
+        setErrorMessage("Erro: Não foi possível obter o token.");
+      }
+    } catch (error) {
+      setLoading(false);
+      setErrorMessage("Credenciais inválidas. Tente novamente.");
+    }
   };
 
   const handleRegister = async (event) => {
     event.preventDefault();
-
-    const userData = {
-      name,
-      email: newEmail,
-      password: newPassword,
-      age: parseInt(age),
-    };
+    setErrorMessage("");
+    setSuccessMessage("");
+    if (!name || !newEmail || !newPassword || !age) {
+      setErrorMessage("Por favor, preencha todos os campos.");
+      return;
+    }
 
     try {
-      const response = await api.post('/users', userData); // Envia os dados de cadastro para a API
-      console.log('Cadastro realizado com sucesso:', response.data);
-      navigate('/Profile'); // Navegar após o cadastro
+      await api.post("/users", {
+        name,
+        email: newEmail,
+        password: newPassword,
+        age: parseInt(age),
+      });
+      setSuccessMessage("Cadastro realizado com sucesso!");
+      setName("");
+      setNewEmail("");
+      setNewPassword("");
+      setAge("");
     } catch (error) {
-      console.error('Erro no cadastro:', error);
-      // Aqui você pode mostrar uma mensagem de erro para o usuário
+      setErrorMessage("Erro ao cadastrar. Tente novamente.");
     }
   };
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
+    setErrorMessage("");
+    setSuccessMessage("");
   };
 
   return (
-    <Container 
-      maxWidth="xs" 
-      sx={{ 
-        display: 'flex', 
-        flexDirection: 'column', 
-        justifyContent: 'center', 
-        height: 'calc(100vh - 120px)',  // Ajuste da altura
-        paddingTop: 0,
-        paddingBottom: 0
+    <Container
+      maxWidth="xs"
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        height: "100vh",
+        padding: "20px",
       }}
     >
-      <Box 
-        sx={{ 
-          backgroundColor: '#ffffff', 
-          padding: '30px', 
-          borderRadius: '8px', 
-          boxShadow: 3,
+      <Box
+        sx={{
+          backgroundColor: "#ffffff",
+          padding: "30px",
+          borderRadius: "16px",
+          boxShadow: 10,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          transition: "all 0.3s ease-in-out",
+          "&:hover": {
+            boxShadow: 15,
+          },
         }}
       >
-        <Typography 
-          variant="h4" 
-          align="center" 
-          sx={{ color: '#4caf50', marginBottom: '20px' }}
-        >
-          {value === 0 ? 'Cadastro' : 'Login'}
-        </Typography>
-
-        <Tabs 
-          value={value} 
-          onChange={handleTabChange} 
-          indicatorColor="primary" 
-          textColor="primary" 
-          centered
-          sx={{ 
-            marginBottom: '20px',
-            marginLeft: '20px', 
-            marginRight: '20px', 
-            marginTop: '10px', // margem acima das abas
-            marginBottom: '10px', // margem abaixo das abas
-            borderBottom: '1px solid #ccc' // Linha de separação entre as abas e o conteúdo
+        <Typography
+          variant="h4"
+          align="center"
+          sx={{
+            color: "#4caf50",
+            marginBottom: "20px",
+            fontWeight: "bold",
+            fontFamily: "'Roboto', sans-serif",
           }}
         >
-          <Tab label="Cadastro" sx={{ padding: '10px 20px' }} />
-          <Tab label="Login" sx={{ padding: '10px 20px' }} />
+          {value === 0 ? "Cadastro" : "Login"}
+        </Typography>
+
+        <Tabs
+          value={value}
+          onChange={handleTabChange}
+          indicatorColor="primary"
+          textColor="primary"
+          centered
+          sx={{
+            marginBottom: "20px",
+          }}
+        >
+          <Tab label="Cadastro" sx={{ padding: "12px 25px", fontWeight: "bold" }} />
+          <Tab label="Login" sx={{ padding: "12px 25px", fontWeight: "bold" }} />
         </Tabs>
 
+        {errorMessage && (
+          <Alert severity="error" sx={{ marginBottom: "20px", fontWeight: "bold" }}>
+            {errorMessage}
+          </Alert>
+        )}
+
+        {successMessage && (
+          <Alert severity="success" sx={{ marginBottom: "20px", fontWeight: "bold" }}>
+            {successMessage}
+          </Alert>
+        )}
+
         {value === 0 ? (
-          // Formulário de Cadastro
-          <form onSubmit={handleRegister}>
+          <form onSubmit={handleRegister} style={{ width: "100%" }}>
             <TextField
               label="Nome"
               variant="outlined"
               fullWidth
               value={name}
               onChange={(e) => setName(e.target.value)}
-              sx={{ marginBottom: '15px' }}
+              sx={{ marginBottom: "15px" }}
+              InputLabelProps={{ style: { color: "#4caf50" } }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Person sx={{ color: "#4caf50" }} />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               label="Email"
@@ -113,7 +183,15 @@ const LoginPage = () => {
               fullWidth
               value={newEmail}
               onChange={(e) => setNewEmail(e.target.value)}
-              sx={{ marginBottom: '15px' }}
+              sx={{ marginBottom: "15px" }}
+              InputLabelProps={{ style: { color: "#4caf50" } }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Email sx={{ color: "#4caf50" }} />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               label="Senha"
@@ -122,7 +200,15 @@ const LoginPage = () => {
               fullWidth
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              sx={{ marginBottom: '15px' }}
+              sx={{ marginBottom: "15px" }}
+              InputLabelProps={{ style: { color: "#4caf50" } }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Lock sx={{ color: "#4caf50" }} />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               label="Idade"
@@ -131,29 +217,37 @@ const LoginPage = () => {
               fullWidth
               value={age}
               onChange={(e) => setAge(e.target.value)}
-              sx={{ marginBottom: '20px' }}
-              inputProps={{ min: 5, max: 120 }}
+              sx={{ marginBottom: "20px" }}
+              InputLabelProps={{ style: { color: "#4caf50" } }}
             />
-            <Button 
-              variant="contained" 
-              color="success" 
-              fullWidth 
+            <Button
+              variant="contained"
+              color="success"
+              fullWidth
               type="submit"
-              sx={{ padding: '12px', fontSize: '16px' }}
+              sx={{ padding: "14px", marginTop: "10px", borderRadius: "8px" }}
+              startIcon={<HowToReg />}
             >
               Cadastrar
             </Button>
           </form>
         ) : (
-          // Formulário de Login
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleLogin} style={{ width: "100%" }}>
             <TextField
               label="Email"
               variant="outlined"
               fullWidth
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              sx={{ marginBottom: '15px' }}
+              sx={{ marginBottom: "15px" }}
+              InputLabelProps={{ style: { color: "#4caf50" } }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Email sx={{ color: "#4caf50" }} />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               label="Senha"
@@ -162,16 +256,26 @@ const LoginPage = () => {
               fullWidth
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              sx={{ marginBottom: '20px' }}
+              sx={{ marginBottom: "20px" }}
+              InputLabelProps={{ style: { color: "#4caf50" } }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Lock sx={{ color: "#4caf50" }} />
+                  </InputAdornment>
+                ),
+              }}
             />
-            <Button 
-              variant="contained" 
-              color="success" 
-              fullWidth 
+            <Button
+              variant="contained"
+              color="success"
+              fullWidth
               type="submit"
-              sx={{ padding: '12px', fontSize: '16px', marginTop: '10px' }}
+              sx={{ padding: "14px", marginTop: "10px", borderRadius: "8px" }}
+              startIcon={<ExitToApp />}
+              disabled={loading}
             >
-              Entrar
+              {loading ? <CircularProgress size={24} color="inherit" /> : "Entrar"}
             </Button>
           </form>
         )}

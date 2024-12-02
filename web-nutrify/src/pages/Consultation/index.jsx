@@ -16,12 +16,15 @@ import {
   Select,
   InputLabel,
   FormControl,
+  Paper,
+  IconButton,
 } from "@mui/material";
+import { Edit, Save, Close } from "@mui/icons-material";
 import "./style.css";
-import api from "../../services/api"
+import api from "../../services/api";
 
 const ConsultationPage = () => {
-  const [events, setEvents] = useState([]); // Estado para armazenar os eventos do calendário
+  const [events, setEvents] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [newEvent, setNewEvent] = useState({
     name: "",
@@ -34,10 +37,9 @@ const ConsultationPage = () => {
   // Função para buscar as consultas da API
   async function getConsultations() {
     try {
-      const response = await api.get("/consultations"); // Faz a requisição para buscar as consultas
+      const response = await api.get("/consultations");
       const consultations = response.data;
 
-      // Convertendo as consultas da API para o formato adequado para o calendário
       const formattedConsultations = consultations.map((consultation) => {
         const start = new Date(consultation.start);
         const end = new Date(consultation.end);
@@ -52,7 +54,7 @@ const ConsultationPage = () => {
         };
       });
 
-      setEvents(formattedConsultations); // Atualizando o estado com as consultas formatadas
+      setEvents(formattedConsultations);
     } catch (error) {
       console.error("Erro ao carregar as consultas:", error);
     }
@@ -75,29 +77,25 @@ const ConsultationPage = () => {
     }
   }
 
-  // Função chamada ao selecionar uma data no calendário
   const handleDateSelect = (selectInfo) => {
     setModalOpen(true);
     setNewEvent({
       name: "",
       email: "",
       bodyType: "",
-      date: selectInfo.startStr.split("T")[0], // Apenas a data
+      date: selectInfo.startStr.split("T")[0],
       time: "",
     });
   };
 
-  // Fechar a modal
   const handleModalClose = () => {
     setModalOpen(false);
     setNewEvent({ name: "", email: "", bodyType: "", date: "", time: "" });
   };
 
-  // Salvar a nova consulta e atualizar o calendário
   const handleModalSave = async () => {
-    // Combinar data e hora em um único valor ISO para `start`
     const start = new Date(`${newEvent.date}T${newEvent.time}`);
-    const end = new Date(start.getTime() + 60 * 60 * 1000); // Adiciona 1 hora
+    const end = new Date(start.getTime() + 60 * 60 * 1000);
 
     const eventData = {
       title: `${newEvent.name} (${newEvent.bodyType})`,
@@ -108,17 +106,13 @@ const ConsultationPage = () => {
       end: end.toISOString(),
     };
 
-    // Atualiza eventos no calendário
     setEvents([...events, eventData]);
-
-    // Salva no banco de dados
     await saveConsultation(eventData);
-
     handleModalClose();
   };
 
   useEffect(() => {
-    getConsultations(); // Carrega as consultas ao iniciar a página
+    getConsultations();
   }, []);
 
   return (
@@ -152,7 +146,14 @@ const ConsultationPage = () => {
       />
 
       <Dialog open={modalOpen} onClose={handleModalClose}>
-        <DialogTitle>Agendar Consulta</DialogTitle>
+        <DialogTitle>
+          <Box display="flex" justifyContent="space-between" alignItems="center">
+            Agendar Consulta
+            <IconButton edge="end" onClick={handleModalClose} color="secondary">
+              <Close />
+            </IconButton>
+          </Box>
+        </DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
@@ -200,10 +201,10 @@ const ConsultationPage = () => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleModalClose} color="secondary">
+          <Button onClick={handleModalClose} color="secondary" startIcon={<Close />}>
             Cancelar
           </Button>
-          <Button onClick={handleModalSave} color="primary">
+          <Button onClick={handleModalSave} color="primary" startIcon={<Save />}>
             Salvar
           </Button>
         </DialogActions>
