@@ -1,18 +1,38 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { User } from './user/user';
 import { UsersService } from './users.service';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { AuthService } from 'src/auth/auth.service';
+import { UserLogin } from './user/userLogin';
+import { GuardService } from 'src/guard/guard.service';
 
 @ApiTags('Users')
 @Controller('users')
 export class UsersController {
 
-    constructor(private readonly userService: UsersService){}
+    constructor(private readonly userService: UsersService,
+                private readonly authService: AuthService
+    ){}
 
+    @UseGuards(GuardService)
     @ApiCreatedResponse({type: User, isArray: true, description: "Get All Users from DB"})
     @Get()
     async getAllUsers(): Promise<User[]>{
         return this.userService.listAllUsers();
+    }
+
+    @ApiCreatedResponse()
+    @Post()
+    async getLogin(@Body() login: UserLogin){
+        const id = await this.userService.getLogin(login);
+
+        if(id ==  null)
+            throw new UnauthorizedException;
+
+        const token = await this.authService.createToken(id);
+
+        return { auth: true, token: token };
+
     }
 
     @ApiCreatedResponse({type: User, description: "Create a user"})
