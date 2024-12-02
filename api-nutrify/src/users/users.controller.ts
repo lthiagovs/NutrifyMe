@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UnauthorizedException, UseGuards, Headers } from '@nestjs/common';
 import { User } from './user/user';
 import { UsersService } from './users.service';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
@@ -19,6 +19,14 @@ export class UsersController {
     @Get()
     async getAllUsers(): Promise<User[]>{
         return this.userService.listAllUsers();
+    }
+
+    @ApiCreatedResponse()
+    @Post("check-token")
+    async checkToken(@Headers("Authorization") token: string) {
+        const isValid = await this.authService.checkToken(token);
+
+        return { valid: isValid };
     }
 
     @ApiCreatedResponse()
