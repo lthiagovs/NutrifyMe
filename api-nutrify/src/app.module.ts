@@ -6,11 +6,22 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConsultationsModule } from './consultations/consultations.module';
 import { GuardService } from './guard/guard.service';
 import { AuthService } from './auth/auth.service';
-import { JwtService } from '@nestjs/jwt';
+import { JwtModule, JwtService } from '@nestjs/jwt';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [UsersModule, MongooseModule.forRoot('mongodb://localhost:27017/'), ConsultationsModule],
+  imports: [
+    ConfigModule.forRoot( {isGlobal: true, envFilePath: '.env'} ),  // Carrega o arquivo .env
+    UsersModule,
+    MongooseModule.forRoot('mongodb://localhost:27017/'),
+    ConsultationsModule,
+    JwtModule.register({
+      secret: process.env.JWT_SECRET || 'nutrifyme', // Certifique-se de definir essa chave
+      signOptions: { expiresIn: '1h' }, // Opcional: ajuste o tempo de expiração
+    }),
+  ],
   controllers: [AppController],
   providers: [AppService, GuardService, AuthService, JwtService],
+  
 })
 export class AppModule {}

@@ -30,7 +30,7 @@ export class UsersController {
     }
 
     @ApiCreatedResponse()
-    @Post()
+    @Post("/login")
     async getLogin(@Body() login: UserLogin){
         const id = await this.userService.getLogin(login);
 
