@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  mongodb:
+    image: mongo
+    container_name: mongo_container
+    ports:
+      - "27023:27017"
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.runCommand({ ping: 1 })"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  nestjs:
+    build:
+      context: .
+    environment:
+      MONGO_URL: mongodb://localhost:27023/
+    depends_on:
+      mongodb:
+        condition: service_healthy
