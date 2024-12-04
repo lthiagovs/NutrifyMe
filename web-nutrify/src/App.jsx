@@ -5,12 +5,14 @@ import ProfilePage from "./pages/Profile/index"
 import Layout from "./pages/Layout/layout"
 import ConsultationPage from './pages/Consultation/index'
 import HomePage from './pages/Home/index'
-import {AuthProvider} from './services/authprovider';
+import { AuthProvider } from './services/authprovider';
 import ProtectedRoute from './services/protectedroute';
+import SeedUsers from './services/seedusers.js';
 
 function App() {
   return (
     <AuthProvider>
+      <SeedUsers />
       <Router>
         <Routes>
           <Route path="/" element={<Layout><HomePage /></Layout>} />
@@ -37,4 +39,4 @@ function App() {
   );
 }
 
-export default App
+export default App;

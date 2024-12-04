@@ -18,11 +18,9 @@ const LoginPage = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Verificação do JWT no localStorage ao carregar a página
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (token) {
-      // Se houver token, redireciona para o perfil
       navigate("/Profile");
     }
   }, [navigate]);
@@ -44,14 +42,12 @@ const LoginPage = () => {
 
       if (token) {
         localStorage.setItem("jwt", token);
-
-        // Simular carregamento e recarregar antes de redirecionar
         setTimeout(() => {
           window.location.reload();
           setTimeout(() => {
             navigate("/Profile");
-          }, 1000); // Aguardar 1 segundo antes de redirecionar para Profile
-        }, 1000); // Tempo da animação de carregamento
+          }, 1000);
+        }, 1000);
       } else {
         setLoading(false);
         setErrorMessage("Erro: Não foi possível obter o token.");

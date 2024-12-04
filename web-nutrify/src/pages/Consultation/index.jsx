@@ -16,12 +16,11 @@ import {
   Select,
   InputLabel,
   FormControl,
-  Paper,
   IconButton,
 } from "@mui/material";
-import { Edit, Save, Close } from "@mui/icons-material";
-import "./style.css";
+import { Save, Close } from "@mui/icons-material";
 import api from "../../services/api";
+import './style.css'
 
 const ConsultationPage = () => {
   const [events, setEvents] = useState([]);
@@ -34,7 +33,6 @@ const ConsultationPage = () => {
     time: "",
   });
 
-  // Função para buscar as consultas da API
   async function getConsultations() {
     try {
       const response = await api.get("/consultations");
@@ -60,7 +58,6 @@ const ConsultationPage = () => {
     }
   }
 
-  // Função para salvar a consulta
   async function saveConsultation(eventData) {
     try {
       await api.post("/consultations", {
@@ -76,6 +73,14 @@ const ConsultationPage = () => {
       console.error("Erro ao salvar consulta:", error);
     }
   }
+
+  const isConflict = (newStart, newEnd) => {
+    return events.some((event) => {
+      const eventStart = new Date(event.start);
+      const eventEnd = new Date(event.end);
+      return (newStart < eventEnd && newEnd > eventStart);
+    });
+  };
 
   const handleDateSelect = (selectInfo) => {
     setModalOpen(true);
@@ -96,6 +101,11 @@ const ConsultationPage = () => {
   const handleModalSave = async () => {
     const start = new Date(`${newEvent.date}T${newEvent.time}`);
     const end = new Date(start.getTime() + 60 * 60 * 1000);
+
+    if (isConflict(start, end)) {
+      alert("Já existe uma consulta agendada nesse horário. Por favor, escolha outro horário.");
+      return;
+    }
 
     const eventData = {
       title: `${newEvent.name} (${newEvent.bodyType})`,

@@ -9,14 +9,14 @@ export class ConsultationsController {
 
     constructor(private readonly consultationsService: ConsultationsService){}
 
-    @UseGuards(GuardService)
+    //@UseGuards(GuardService)
     @ApiCreatedResponse({type: Consultation, isArray: true})
     @Get()
     async getAllConsultations(): Promise<Consultation[]>{
         return this.consultationsService.listAllConsultations();
     }
     
-    @UseGuards(GuardService)
+    //@UseGuards(GuardService)
     @ApiCreatedResponse({type: Consultation})
     @Post()
     async createConsultation(@Body() consultation: Consultation): Promise<Consultation>{
